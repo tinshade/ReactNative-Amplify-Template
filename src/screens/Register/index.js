@@ -16,12 +16,17 @@ import {redirectTo} from '../../utils';
 import {useNavigation} from '@react-navigation/native';
 import {useForm} from 'react-hook-form';
 const Register = () => {
-  const {control, handleSubmit} = useForm();
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm();
 
   const navigation = useNavigation();
 
-  const initiateRegister = () => {
+  const initiateRegister = data => {
     console.warn('Register called');
+    console.log(data, errors);
     //Validate data
     navigation.navigate('Login');
   };
@@ -55,8 +60,14 @@ const Register = () => {
           name="username"
           control={control}
           placeholder={'Your username'}
-          minLength={3}
-          maxLength={16}
+          rules={{
+            required: 'This field is required',
+            minLength: {
+              value: 3,
+              message: 'Username should be minimum 3 characters long',
+            },
+            maxHeight: 16,
+          }}
         />
 
         <IconInputField
@@ -71,8 +82,9 @@ const Register = () => {
           name="email"
           control={control}
           placeholder={'Your email'}
-          minLength={3}
-          maxLength={16}
+          rules={{
+            required: 'This field is required',
+          }}
         />
 
         <IconInputField
@@ -87,8 +99,14 @@ const Register = () => {
           name="password"
           control={control}
           placeholder={'Your password'}
-          minLength={8}
-          maxLength={32}
+          rules={{
+            required: 'This field is required',
+            minLength: {
+              value: 8,
+              message: 'Password should be minimum 8 characters long',
+            },
+            maxLength: 32,
+          }}
           secureTextEntry
         />
         <IconInputField
@@ -103,8 +121,14 @@ const Register = () => {
           name="re_password"
           control={control}
           placeholder={'Confirm your password'}
-          minLength={8}
-          maxLength={32}
+          rules={{
+            required: 'This field is required',
+            minLength: {
+              value: 8,
+              message: 'Password should be minimum 8 characters long',
+            },
+            maxLength: 32,
+          }}
           secureTextEntry
         />
         <Spacer />

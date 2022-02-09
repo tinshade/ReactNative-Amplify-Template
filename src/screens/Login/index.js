@@ -23,10 +23,14 @@ import {useForm} from 'react-hook-form';
 const Login = () => {
   const {height} = useWindowDimensions();
   const navigation = useNavigation();
-  const {control, handleSubmit} = useForm();
+  const {
+    control,
+    handleSubmit,
+    formState: {errors},
+  } = useForm();
 
   const initiateLogin = data => {
-    console.log(data);
+    console.log(data, errors);
     //Validate user
     // navigation.navigate('Home');
   };
@@ -59,17 +63,29 @@ const Login = () => {
         <InputField
           name="username"
           control={control}
-          minLength={3}
-          maxLength={16}
           placeholder={'Username / Email'}
+          rules={{
+            required: 'This field is required',
+            minLength: {
+              value: 3,
+              message: 'Username should be minimum 3 characters long',
+            },
+            maxHeight: 16,
+          }}
         />
 
         <InputField
           name="password"
           control={control}
-          minLength={8}
-          maxLength={32}
           placeholder={'Password'}
+          rules={{
+            required: 'This field is required',
+            minLength: {
+              value: 8,
+              message: 'Password should be minimum 8 characters long',
+            },
+            maxLength: 32,
+          }}
           secureTextEntry
         />
 

@@ -3,32 +3,39 @@ import {View, TextInput, StyleSheet} from 'react-native';
 import {HIGHESTVALUE} from '../../constants';
 import {global_styles} from '../../utils/global_styles';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Controller} from 'react-hook-form';
 const IconInputField = ({
   icon,
-  value,
-  setValue,
+  control,
+  name,
   placeholder,
-  type,
-  maxLength,
-  minLength,
+  secureTextEntry,
+  rules = {},
 }) => {
   return (
     <View style={{...global_styles.inputContainer, ...styles.container}}>
       {icon}
-      <TextInput
-        secureTextEntry={type === 'password'}
-        value={value}
-        style={{
-          width: '100%',
-          fontWeight: 'bold',
-          color: '#051c60',
-          paddingVertical: 15,
-          paddingLeft: 7,
-        }}
-        maxLength={maxLength ? maxLength : HIGHESTVALUE}
-        minLength={minLength ? minLength : 0}
-        onChangeText={setValue}
-        placeholder={placeholder ? placeholder : 'Enter text..'}
+      <Controller
+        control={control}
+        name={name}
+        render={({field: {value, onChange, onBlur}}) => (
+          <TextInput
+            secureTextEntry={secureTextEntry}
+            value={value}
+            style={{
+              width: '100%',
+              fontWeight: 'bold',
+              color: '#051c60',
+              paddingVertical: 15,
+              paddingLeft: 7,
+            }}
+            maxLength={maxLength ? maxLength : HIGHESTVALUE}
+            minLength={minLength ? minLength : 0}
+            onChangeText={onChange}
+            onBlur={onBlur}
+            placeholder={placeholder ? placeholder : 'Enter text..'}
+          />
+        )}
       />
       <MaterialCommunityIcons name="blank" size={25} />
     </View>
