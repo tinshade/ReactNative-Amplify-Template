@@ -18,16 +18,17 @@ import CustomButton, {SocialButton} from '../../components/CustomButton';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Spacer from '../../components/Spacer';
 import {useNavigation} from '@react-navigation/native';
+import {useForm} from 'react-hook-form';
+
 const Login = () => {
   const {height} = useWindowDimensions();
   const navigation = useNavigation();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const {control, handleSubmit} = useForm();
 
-  const initiateLogin = () => {
-    Alert.alert('login called');
+  const initiateLogin = data => {
+    console.log(data);
     //Validate user
-    navigation.navigate('Home');
+    // navigation.navigate('Home');
   };
 
   const initiateForgotPassword = () => {
@@ -56,24 +57,26 @@ const Login = () => {
           resizeMode="contain"
         />
         <InputField
-          value={username}
-          setValue={setUsername}
+          name="username"
+          control={control}
           minLength={3}
           maxLength={16}
           placeholder={'Username / Email'}
         />
+
         <InputField
-          value={password}
-          setValue={setPassword}
+          name="password"
+          control={control}
           minLength={8}
           maxLength={32}
           placeholder={'Password'}
-          type={'password'}
+          secureTextEntry
         />
+
         <CustomButton
           title={'Login'}
           styles={primaryButton}
-          callback={initiateLogin}
+          callback={handleSubmit(initiateLogin)}
         />
 
         <CustomButton

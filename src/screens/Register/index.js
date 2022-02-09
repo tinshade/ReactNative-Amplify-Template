@@ -14,12 +14,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import CustomButton, {SocialButton} from '../../components/CustomButton';
 import {redirectTo} from '../../utils';
 import {useNavigation} from '@react-navigation/native';
-
+import {useForm} from 'react-hook-form';
 const Register = () => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [re_password, setRePassword] = useState('');
+  const {control, handleSubmit} = useForm();
 
   const navigation = useNavigation();
 
@@ -55,8 +52,8 @@ const Register = () => {
               color="#051c60"
             />
           }
-          value={username}
-          setValue={setUsername}
+          name="username"
+          control={control}
           placeholder={'Your username'}
           minLength={3}
           maxLength={16}
@@ -71,8 +68,8 @@ const Register = () => {
               color="#051c60"
             />
           }
-          value={email}
-          setValue={setEmail}
+          name="email"
+          control={control}
           placeholder={'Your email'}
           minLength={3}
           maxLength={16}
@@ -87,12 +84,12 @@ const Register = () => {
               color="#051c60"
             />
           }
-          value={password}
-          setValue={setPassword}
+          name="password"
+          control={control}
           placeholder={'Your password'}
           minLength={8}
           maxLength={32}
-          type={'password'}
+          secureTextEntry
         />
         <IconInputField
           icon={
@@ -103,18 +100,18 @@ const Register = () => {
               color="#051c60"
             />
           }
-          value={re_password}
-          setValue={setRePassword}
+          name="re_password"
+          control={control}
           placeholder={'Confirm your password'}
           minLength={8}
           maxLength={32}
-          type={'password'}
+          secureTextEntry
         />
         <Spacer />
         <CustomButton
           title={'Register'}
           styles={primaryButton}
-          callback={initiateRegister}
+          callback={handleSubmit(initiateRegister)}
         />
         <Spacer />
         <Text style={{...global_styles.small, paddingHorizontal: 5}}>
