@@ -88,7 +88,6 @@ const Login = () => {
           }}
           secureTextEntry
         />
-
         <CustomButton
           title={'Login'}
           styles={primaryButton}
@@ -101,7 +100,7 @@ const Login = () => {
           callback={initiateForgotPassword}
         />
 
-        <Spacer height={-1} />
+        <Spacer />
 
         <SocialButton
           icon={
@@ -153,7 +152,7 @@ const styles = StyleSheet.create({
   logo: {
     width: '70%',
     maxWidth: 300,
-    maxHeight: 200,
+    maxHeight: 150,
   },
   text: {
     fontWeight: 'bold',

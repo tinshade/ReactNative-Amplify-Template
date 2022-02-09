@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import Title from '../../components/Title';
 import {Alert, View, StyleSheet, Text, ScrollView} from 'react-native';
 import Spacer from '../../components/Spacer';
@@ -15,12 +15,16 @@ import CustomButton, {SocialButton} from '../../components/CustomButton';
 import {redirectTo} from '../../utils';
 import {useNavigation} from '@react-navigation/native';
 import {useForm} from 'react-hook-form';
+import {EMAIL_REGEX} from '../../constants';
 const Register = () => {
   const {
     control,
     handleSubmit,
+    watch,
     formState: {errors},
   } = useForm();
+  const password = watch('password');
+  const re_password = watch('re_password');
 
   const navigation = useNavigation();
 
@@ -28,7 +32,7 @@ const Register = () => {
     console.warn('Register called');
     console.log(data, errors);
     //Validate data
-    navigation.navigate('Login');
+    // navigation.navigate('Login');
   };
 
   const initiateFBLogin = () => {
@@ -84,6 +88,7 @@ const Register = () => {
           placeholder={'Your email'}
           rules={{
             required: 'This field is required',
+            patten: {value: EMAIL_REGEX, message: 'Please enter a valid email'},
           }}
         />
 
@@ -100,6 +105,7 @@ const Register = () => {
           control={control}
           placeholder={'Your password'}
           rules={{
+            validate: value => value === re_password || 'Passwords must match',
             required: 'This field is required',
             minLength: {
               value: 8,
@@ -122,6 +128,7 @@ const Register = () => {
           control={control}
           placeholder={'Confirm your password'}
           rules={{
+            validate: value => value === password || 'Passwords must match',
             required: 'This field is required',
             minLength: {
               value: 8,
